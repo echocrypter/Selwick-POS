@@ -1,0 +1,120 @@
+{
+  "name": "selwick-pos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Selwick POS offline-first desktop point of sale",
+  "author": "Selwick Softwares",
+  "productName": "Selwick POS",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "check:env": "node scripts/verify-environment.cjs",
+    "check:db": "node scripts/verify-database.cjs",
+    "check:auth": "node --experimental-sqlite scripts/verify-auth.cjs",
+    "check:repo": "node --experimental-sqlite scripts/verify-repositories.cjs",
+    "check:migration": "node --experimental-sqlite scripts/verify-migration.cjs",
+    "check:pos": "node --experimental-sqlite scripts/verify-pos.cjs",
+    "check:acceptance": "node --experimental-sqlite scripts/verify-m5-acceptance.cjs",
+    "check:m6a": "node --experimental-sqlite scripts/verify-m6-stage-a.cjs",
+    "check:m6b": "node --experimental-sqlite scripts/verify-m6-stage-b.cjs",
+    "check:m6c": "node --experimental-sqlite scripts/verify-m6-stage-c.cjs",
+    "check:m6d": "node --experimental-sqlite --experimental-transform-types scripts/verify-m6-stage-d.cjs",
+    "check:phase2": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase2-security.cjs",
+    "check:phase3": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase3-backup.cjs",
+    "check:phase4": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase4-cloud.cjs",
+    "check:phase5": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase5-production.cjs",
+    "check:phase6": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase6-licensing.cjs",
+    "check:phase7": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase7-admin-dashboard.cjs",
+    "check:phase8": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase8-production-licensing.cjs",
+    "check:phase8.2": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase8.2-turso-deployment.cjs",
+    "check:turso-live": "node --experimental-sqlite --experimental-transform-types scripts/verify-real-turso-cloud.cjs",
+    "desktop:dev": "electron .",
+    "desktop:build": "npm run build && electron-builder --win nsis",
+    "desktop:dir": "npm run build && electron-builder --dir"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "@supabase/supabase-js": "^2.118.0",
+    "canvas-confetti": "^1.9.4",
+    "lucide-react": "^1.16.0",
+    "next": "16.4.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@tailwindcss/turbopack": "^4",
+    "@types/canvas-confetti": "^1.9.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "electron": "^35.7.5",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "build": {
+    "appId": "com.selwicksoftwares.pos",
+    "productName": "Selwick POS",
+    "afterPack": "scripts/copy-standalone.cjs",
+    "directories": {
+      "output": "desktop-dist"
+    },
+    "files": [
+      "electron/**/*",
+      "package.json",
+      "!node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": ".next/standalone",
+        "to": "server",
+        "filter": [
+          "**/*",
+          "!.data/**/*",
+          "!electron/**/*"
+        ]
+      },
+      {
+        "from": ".next/static",
+        "to": "server/.next/static",
+        "filter": [
+          "**/*"
+        ]
+      },
+      {
+        "from": "public",
+        "to": "server/public",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "electron/selwick-icon.ico",
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Selwick POS",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}

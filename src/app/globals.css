@@ -1,0 +1,444 @@
+
+@import "tailwindcss";
+
+:root {
+  color-scheme: light;
+  --background: #f8f7fc;
+  --foreground: #211d35;
+  --surface: #242826;
+  --surface-raised: #303532;
+  --surface-muted: #3b423c;
+  --border: #373d38;
+  --muted-foreground: #a6afa7;
+  --sidebar-background: #202321;
+  --topbar-background: rgb(23 25 26 / 95%);
+  --accent: #c5f277;
+  --accent-foreground: #17191a;
+}
+
+/* Selwick design tokens: neutral graphite + acid lime.
+   Existing Tailwind blue/indigo/cyan utilities inherit the new accent palette,
+   including hover, focus, gradients, rings and translucent states. */
+@theme {
+  --color-slate-50: #f7f8f3;
+  --color-slate-100: #f3f5ee;
+  --color-slate-200: #dce2d8;
+  --color-slate-300: #c3ccc1;
+  --color-slate-400: #a6afa7;
+  --color-slate-500: #89948b;
+  --color-slate-600: #69746c;
+  --color-slate-700: #3b423c;
+  --color-slate-800: #303532;
+  --color-slate-900: #242826;
+  --color-slate-950: #17191a;
+
+  --color-blue-50: #f5f2ff;
+  --color-blue-100: #ece7ff;
+  --color-blue-200: #dcd3ff;
+  --color-blue-300: #b6a5ff;
+  --color-blue-400: #9279f1;
+  --color-blue-500: #7357e8;
+  --color-blue-600: #6347d9;
+  --color-blue-700: #5135b9;
+  --color-blue-800: #3f298f;
+  --color-blue-900: #2d205e;
+  --color-blue-950: #21163f;
+  --color-indigo-50: #f5f2ff;
+  --color-indigo-100: #ece7ff;
+  --color-indigo-200: #dcd3ff;
+  --color-indigo-300: #b6a5ff;
+  --color-indigo-400: #9279f1;
+  --color-indigo-500: #7357e8;
+  --color-indigo-600: #6347d9;
+  --color-indigo-700: #5135b9;
+  --color-indigo-800: #3f298f;
+  --color-indigo-900: #2d205e;
+  --color-cyan-300: #b6a5ff;
+  --color-cyan-400: #9279f1;
+  --color-cyan-500: #7357e8;
+  --color-cyan-600: #6347d9;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Base page styles */
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
+    sans-serif;
+  overflow-x: hidden;
+}
+
+/* -------------------------------------------------------
+   LIGHT THEME
+   The POS root sets data-theme="light" when Light Mode
+   is saved. These overrides adapt existing Tailwind
+   slate utilities without rewriting every component.
+------------------------------------------------------- */
+
+[data-theme="light"] {
+  color-scheme: light;
+  --background: #f8f7fc;
+  --foreground: #211d35;
+  --surface: #ffffff;
+  --surface-raised: #f4f2fa;
+  --surface-muted: #eeeaf6;
+  --border: #e8e5f0;
+  --muted-foreground: #635d76;
+  --sidebar-background: #ffffff;
+  --topbar-background: rgb(255 255 255 / 95%);
+  --accent: #6347d9;
+  --accent-foreground: #ffffff;
+
+  /* Purple tokens with accessible contrast for interactive controls. */
+  --color-blue-50: #f5f2ff;
+  --color-blue-100: #ece7ff;
+  --color-blue-200: #dcd3ff;
+  --color-blue-300: #b6a5ff;
+  --color-blue-400: #9279f1;
+  --color-blue-500: #7357e8;
+  --color-blue-600: #6347d9;
+  --color-blue-700: #5135b9;
+  --color-blue-800: #3f298f;
+  --color-blue-900: #2d205e;
+  --color-indigo-50: #f5f2ff;
+  --color-indigo-100: #ece7ff;
+  --color-indigo-200: #dcd3ff;
+  --color-indigo-300: #b6a5ff;
+  --color-indigo-400: #9279f1;
+  --color-indigo-500: #7357e8;
+  --color-indigo-600: #6347d9;
+  --color-indigo-700: #5135b9;
+  --color-indigo-800: #3f298f;
+  --color-indigo-900: #2d205e;
+  --color-cyan-300: #b6a5ff;
+  --color-cyan-400: #9279f1;
+  --color-cyan-500: #7357e8;
+  --color-cyan-600: #6347d9;
+
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Page and panel backgrounds */
+[data-theme="light"].bg-slate-950,
+[data-theme="light"] .bg-slate-950 {
+  background-color: #f8f7fc !important;
+}
+
+[data-theme="light"] .bg-slate-900 {
+  background-color: #ffffff !important;
+}
+
+[data-theme="light"] .bg-slate-800 {
+  background-color: #f4f2fa !important;
+}
+
+[data-theme="light"] .bg-slate-700 {
+  background-color: #eeeaf6 !important;
+}
+
+[data-theme="light"] .bg-slate-600 {
+  background-color: #e8e5f0 !important;
+}
+
+/* Translucent slate backgrounds */
+[data-theme="light"] [class*="bg-slate-950/"],
+[data-theme="light"] [class*="bg-slate-900/"],
+[data-theme="light"] [class*="bg-slate-800/"],
+[data-theme="light"] [class*="bg-slate-700/"] {
+  background-color: #f4f2fa !important;
+}
+
+/* Neutral text colors */
+[data-theme="light"] .text-white,
+[data-theme="light"] .text-slate-100,
+[data-theme="light"] .text-slate-200,
+[data-theme="light"] .text-slate-300 {
+  color: #211d35 !important;
+}
+
+[data-theme="light"] .text-slate-400,
+[data-theme="light"] .text-slate-500 {
+  color: #635d76 !important;
+}
+
+[data-theme="light"] .text-slate-600 {
+  color: #536050 !important;
+}
+
+/*
+  Preserve white text on strongly colored buttons and badges.
+  Their backgrounds use blue, indigo, emerald, rose, or other
+  non-slate color utilities.
+*/
+[data-theme="light"] button[class*="bg-blue-"],
+[data-theme="light"] button[class*="bg-indigo-"],
+[data-theme="light"] button[class*="bg-emerald-"],
+[data-theme="light"] button[class*="bg-rose-"],
+[data-theme="light"] button[class*="bg-red-"],
+[data-theme="light"] button[class*="bg-violet-"],
+[data-theme="light"] button[class*="bg-purple-"],
+[data-theme="light"] button[class*="bg-cyan-"],
+[data-theme="light"] button[class*="bg-gradient-to-"] {
+  color: #ffffff !important;
+}
+
+/* Slate borders */
+[data-theme="light"] .border-slate-950,
+[data-theme="light"] .border-slate-900,
+[data-theme="light"] .border-slate-800,
+[data-theme="light"] .border-slate-700 {
+  border-color: #eeeaf6 !important;
+}
+
+[data-theme="light"] .border-slate-600 {
+  border-color: #e8e5f0 !important;
+}
+
+/* Hover states for neutral controls */
+[data-theme="light"] .hover\:bg-slate-900:hover,
+[data-theme="light"] .hover\:bg-slate-800:hover,
+[data-theme="light"] .hover\:bg-slate-700:hover,
+[data-theme="light"] .hover\:bg-slate-600:hover {
+  background-color: #eeeaf6 !important;
+}
+
+/* Form fields */
+[data-theme="light"] input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: #ffffff !important;
+  color: #211d35 !important;
+  border-color: #e8e5f0;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: #807a94 !important;
+}
+
+[data-theme="light"] select option {
+  background-color: #ffffff;
+  color: #211d35;
+}
+
+/* Keep links and keyboard focus visible */
+[data-theme="light"] input:focus,
+[data-theme="light"] select:focus,
+[data-theme="light"] textarea:focus {
+  border-color: #6347d9;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.55);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.8);
+}
+
+/* Light scrollbar */
+[data-theme="light"] ::-webkit-scrollbar-track {
+  background: #f4f2fa;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: #e8e5f0;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: #807a94;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Subtle animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Print thermal receipt rules */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+
+  #thermal-receipt-container,
+  #thermal-receipt-container * {
+    visibility: visible;
+  }
+
+  #thermal-receipt-container {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* Brand shell: consistent across dark and light themes. */
+.selwick-sidebar {
+  background: var(--sidebar-background);
+  color: var(--foreground);
+}
+.selwick-topbar {
+  background: var(--topbar-background);
+  color: var(--foreground);
+}
+
+/* In dark mode the lime primary controls need graphite text. */
+[data-theme="dark"] .bg-blue-600,
+[data-theme="dark"] .bg-blue-500,
+[data-theme="dark"] .bg-indigo-600,
+[data-theme="dark"] .bg-indigo-500 {
+  color: #17191a;
+}
+[data-theme="dark"] .bg-blue-600 .text-white,
+[data-theme="dark"] .bg-blue-600 .text-blue-100,
+[data-theme="dark"] .bg-indigo-600 .text-white,
+[data-theme="dark"] .bg-blue-500 .text-white {
+  color: #17191a;
+}
+[data-theme="dark"] .bg-blue-600 svg,
+[data-theme="dark"] .bg-indigo-600 svg,
+[data-theme="dark"] .bg-blue-500 svg {
+  color: #17191a;
+}
+
+/* Readable primary buttons and active navigation in light mode. */
+[data-theme="light"] .bg-blue-600,
+[data-theme="light"] .bg-blue-500,
+[data-theme="light"] .bg-indigo-600,
+[data-theme="light"] .bg-indigo-500 {
+  color: #ffffff;
+}
+[data-theme="light"] .bg-blue-600 svg,
+[data-theme="light"] .bg-indigo-600 svg {
+  color: #ffffff !important;
+}
+
+/* Subtle focus indicator matches the active theme. */
+[data-theme] :is(button, a, input, select, textarea):focus-visible {
+  outline-color: var(--accent);
+}
+
+
+/* SELWICK 2026 — CLOUD WHITE / ROYAL PURPLE */
+[data-theme="light"] {
+  --background: #f8f7fc;
+  --foreground: #211d35;
+  --sidebar-background: #ffffff;
+  --topbar-background: rgba(255,255,255,.97);
+  --accent: #6347d9;
+  --accent-foreground: #ffffff;
+}
+[data-theme="light"] .selwick-sidebar {
+  background: #fff !important;
+  color: #211d35 !important;
+  border-right: 1px solid #ebe8f4 !important;
+  box-shadow: 4px 0 24px rgba(51,36,105,.025);
+}
+[data-theme="light"] .selwick-sidebar [class*="border-slate-"] {border-color:#ebe8f4 !important;}
+[data-theme="light"] .selwick-sidebar [class*="bg-slate-950"],
+[data-theme="light"] .selwick-sidebar [class*="bg-slate-900"] {background:#f7f6fc !important;}
+[data-theme="light"] .selwick-sidebar [class*="bg-slate-800"] {background:#f0edfa !important;}
+[data-theme="light"] .selwick-sidebar :is(.text-white,.text-slate-100,.text-slate-200,.text-slate-300) {color:#211d35 !important;}
+[data-theme="light"] .selwick-sidebar :is(.text-slate-400,.text-slate-500) {color:#67617a !important;}
+[data-theme="light"] .selwick-sidebar nav button {border-radius:12px; min-height:42px; font-weight:550;}
+[data-theme="light"] .selwick-sidebar nav button[aria-current="page"] {
+  background: #f0ebff !important;
+  color: #5135b9 !important;
+  box-shadow: inset 3px 0 0 #7357e8 !important;
+}
+[data-theme="light"] .selwick-sidebar nav button[aria-current="page"] :is(svg,span) {color:#5135b9 !important;}
+[data-theme="light"] .selwick-sidebar nav button:not([aria-current="page"]):hover {background:#f7f5ff !important;color:#5135b9 !important;}
+[data-theme="light"] .selwick-sidebar .bg-gradient-to-tr {background:linear-gradient(135deg,#8168ee,#6347d9) !important; box-shadow:0 5px 16px rgba(99,71,217,.18) !important;}
+[data-theme="light"] .selwick-sidebar .bg-gradient-to-tr svg {color:#fff !important;}
+[data-theme="light"] .selwick-topbar {background:#fff !important;border-bottom:1px solid #ebe8f4 !important;box-shadow:0 1px 6px rgba(45,32,94,.025);}
+[data-theme="light"] main {background:#f8f7fc;}
+[data-theme="light"] main :is(.bg-slate-900,.bg-white) {box-shadow:0 3px 18px rgba(45,32,94,.035);}
+[data-theme="light"] .rounded-2xl {border-radius:18px;}
+[data-theme="light"] .rounded-xl {border-radius:13px;}
+[data-theme="light"] :is(button,a)[class*="bg-blue-600"],
+[data-theme="light"] :is(button,a)[class*="bg-blue-500"],
+[data-theme="light"] :is(button,a)[class*="bg-indigo-600"],
+[data-theme="light"] :is(button,a)[class*="bg-indigo-500"] {background:#6347d9 !important;color:#fff !important;}
+[data-theme="light"] :is(button,a)[class*="bg-blue-600"] :is(svg,span),
+[data-theme="light"] :is(button,a)[class*="bg-blue-500"] :is(svg,span),
+[data-theme="light"] :is(button,a)[class*="bg-indigo-600"] :is(svg,span) {color:#fff !important;}
+[data-theme="light"] :is(button,a)[class*="bg-blue-600"]:hover,
+[data-theme="light"] :is(button,a)[class*="bg-indigo-600"]:hover {background:#5135b9 !important;}
+[data-theme="light"] .text-blue-200,
+[data-theme="light"] .text-blue-300 {color:#5135b9 !important;}
+[data-theme="light"] .bg-blue-500\/10,
+[data-theme="light"] .bg-blue-500\/20 {background:#f0ebff !important;}
+[data-theme="light"] .text-emerald-300,
+[data-theme="light"] .text-emerald-400 {color:#13734d !important;}
+[data-theme="light"] .text-amber-300,
+[data-theme="light"] .text-amber-400 {color:#925500 !important;}
+[data-theme="light"] .text-rose-300,
+[data-theme="light"] .text-rose-400 {color:#b42342 !important;}
+[data-theme="light"] :is(input,select,textarea):focus-visible,
+[data-theme="light"] :is(button,a):focus-visible {outline:2px solid #7357e8;outline-offset:2px;}
+[data-theme="light"] button:disabled {opacity:.58;cursor:not-allowed;}
+[data-theme="light"] .selwick-export-products {background:#6347d9 !important;color:white !important;border-color:#6347d9 !important;}
+[data-theme="light"] .selwick-export-products svg {color:white !important;}
+@media (prefers-reduced-motion: no-preference) {
+  [data-theme="light"] button {transition:background-color .18s ease,color .18s ease,box-shadow .18s ease,transform .18s ease;}
+  [data-theme="light"] button:not(:disabled):active {transform:scale(.985);}
+}
+
+/* POS checkout: keep action visible; cart list is the only scrollable region. */
+[data-theme="light"] main:has(> .flex.h-full) { min-height:0; overflow:hidden; }
+[data-theme="light"] main > .flex.h-full { min-height:0; height:100%; overflow:hidden; }
+@media (max-width: 1023px) {
+  [data-theme="light"] main:has(> .flex.h-full) { overflow-y:auto; }
+  [data-theme="light"] main > .flex.h-full { min-height:0; height:auto; overflow:visible; }
+  [data-theme="light"] main > .flex.h-full > div:last-child { min-height:500px; height:min(650px, 85dvh); }
+}

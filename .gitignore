@@ -1,0 +1,46 @@
+# Local development and runtime data (SQLite databases, backups, logs)
+.data/
+
+# Next.js build output
+.next/
+
+# Dependencies
+node_modules/
+
+# Electron build output
+desktop-dist/
+
+# Logs
+*.log
+
+# License server private keys & databases
+*license_private*
+*.private.pem
+license_server.db*
+
+
+# Environment and secret files
+.env
+.env.*
+!.env.example
+
+# Database files anywhere
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Private keys and certificates
+*.pem
+*.key
+*private_key*
+*private-key*
+
+# Build cache and temporary dumps
+*.tsbuildinfo
+*-output*.txt
+check*.txt
+m6*.txt
+out.txt
+dir-output.txt
