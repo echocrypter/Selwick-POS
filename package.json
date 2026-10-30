@@ -31,6 +31,7 @@
     "check:phase8": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase8-production-licensing.cjs",
     "check:phase8.2": "node --experimental-sqlite --experimental-transform-types scripts/verify-phase8.2-turso-deployment.cjs",
     "check:turso-live": "node --experimental-sqlite --experimental-transform-types scripts/verify-real-turso-cloud.cjs",
+    "check:cloudflare-worker": "node --experimental-sqlite --experimental-transform-types scripts/verify-cloudflare-worker.cjs",
     "desktop:dev": "electron .",
     "desktop:build": "npm run build && electron-builder --win nsis",
     "desktop:dir": "npm run build && electron-builder --dir"

@@ -37,7 +37,7 @@ export function getAdminSecret(): string {
 /**
  * Timing-safe string comparison.
  */
-function safeEqual(a: string, b: string): boolean {
+export function safeEqual(a: string, b: string): boolean {
   if (typeof a !== 'string' || typeof b !== 'string') return false;
   const bufA = Buffer.from(a, 'utf8');
   const bufB = Buffer.from(b, 'utf8');
@@ -48,8 +48,8 @@ function safeEqual(a: string, b: string): boolean {
 /**
  * Creates an HMAC signed session token for admin dashboard access.
  */
-export function createAdminSessionToken(actor: string = 'admin'): string {
-  const secret = getAdminSecret();
+export function createAdminSessionToken(actor: string = 'admin', secretOverride?: string): string {
+  const secret = secretOverride || getAdminSecret();
   const payload = {
     actor,
     issuedAt: Date.now(),
@@ -63,12 +63,12 @@ export function createAdminSessionToken(actor: string = 'admin'): string {
 /**
  * Validates an HMAC signed session token.
  */
-export function verifyAdminSessionToken(token: string): { valid: boolean; actor: string } {
+export function verifyAdminSessionToken(token: string, secretOverride?: string): { valid: boolean; actor: string } {
   try {
     const parts = token.split('.');
     if (parts.length !== 2) return { valid: false, actor: '' };
     const [payloadBase64, sig] = parts;
-    const secret = getAdminSecret();
+    const secret = secretOverride || getAdminSecret();
 
     const expectedSig = crypto.createHmac('sha256', secret).update(payloadBase64).digest('base64url');
     if (!safeEqual(sig, expectedSig)) {

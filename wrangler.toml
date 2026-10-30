@@ -1,0 +1,14 @@
+name = "selwick-license-server"
+main = "src/worker/licenseServer.ts"
+compatibility_date = "2024-10-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+ENVIRONMENT = "production"
+
+# Production secrets must be configured via Cloudflare Dashboard or Wrangler CLI:
+#   npx wrangler secret put TURSO_DATABASE_URL
+#   npx wrangler secret put TURSO_AUTH_TOKEN
+#   npx wrangler secret put SELWICK_LICENSE_PRIVATE_KEY
+#   npx wrangler secret put SELWICK_LICENSE_ADMIN_SECRET
+
