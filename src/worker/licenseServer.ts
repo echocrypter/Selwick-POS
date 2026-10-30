@@ -41,7 +41,7 @@ import {
   recordFailedLogin,
   clearLoginRateLimit,
   ADMIN_COOKIE_NAME,
-} from '../lib/licensing/adminAuth.ts';
+} from '../lib/licensing/adminAuthWorker.ts';
 
 export interface LicenseWorkerEnv {
   TURSO_DATABASE_URL?: string;
@@ -106,7 +106,7 @@ function getClientIp(req: Request): string {
          '127.0.0.1';
 }
 
-function verifyAdminAuth(req: Request, env: LicenseWorkerEnv): { authorized: boolean; actor: string; error?: string } {
+async function verifyAdminAuth(req: Request, env: LicenseWorkerEnv): Promise<{ authorized: boolean; actor: string; error?: string }> {
   let secret: string;
   try {
     secret = getAdminSecret(env);
@@ -127,7 +127,7 @@ function verifyAdminAuth(req: Request, env: LicenseWorkerEnv): { authorized: boo
     if (safeEqual(token, secret)) {
       return { authorized: true, actor: 'bearer-secret' };
     }
-    const tokenResult = verifyAdminSessionToken(token, secret);
+    const tokenResult = await verifyAdminSessionToken(token, secret);
     if (tokenResult.valid) {
       return { authorized: true, actor: tokenResult.actor };
     }
@@ -138,7 +138,7 @@ function verifyAdminAuth(req: Request, env: LicenseWorkerEnv): { authorized: boo
   const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${ADMIN_COOKIE_NAME}=([^;]+)`));
   if (match && match[1]) {
     const token = decodeURIComponent(match[1]);
-    const tokenResult = verifyAdminSessionToken(token, secret);
+    const tokenResult = await verifyAdminSessionToken(token, secret);
     if (tokenResult.valid) {
       return { authorized: true, actor: tokenResult.actor };
     }
@@ -289,7 +289,7 @@ export default {
       }
 
       clearLoginRateLimit(ip);
-      const token = createAdminSessionToken('license-admin', expectedSecret);
+      const token = await createAdminSessionToken('license-admin', expectedSecret);
       const cookieHeader = `${ADMIN_COOKIE_NAME}=${encodeURIComponent(token)}; Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=28800`;
 
       return jsonResponse({ ok: true, token, message: 'Authentication successful.' }, 200, req, {
@@ -307,7 +307,7 @@ export default {
 
     // 6. Admin Auth: GET /api/license/admin/auth/session
     if (method === 'GET' && pathname === '/api/license/admin/auth/session') {
-      const auth = verifyAdminAuth(req, env);
+      const auth = await verifyAdminAuth(req, env);
       if (!auth.authorized) {
         return jsonResponse({ ok: true, authenticated: false }, 200, req);
       }
@@ -322,7 +322,7 @@ export default {
     ];
 
     if (adminAuthPrefixes.some(p => pathname.startsWith(p))) {
-      const auth = verifyAdminAuth(req, env);
+      const auth = await verifyAdminAuth(req, env);
       if (!auth.authorized) {
         return jsonResponse({ ok: false, error: auth.error || 'Unauthorized admin access.' }, 401, req);
       }
